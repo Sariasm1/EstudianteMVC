@@ -34,7 +34,7 @@ public class Estudiante {
     @Override
     public String toString() {
         return "ID: " + id
-             + " | Nombre: " + nombre
+             + " | Nombre P: " + nombre
              + " | Carrera: " + carrera
              + " | Promedio: " + promedio;
     }
