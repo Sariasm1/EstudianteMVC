@@ -21,6 +21,9 @@ public class EstudianteView extends JFrame {
 
     // ── Componentes UI ────────────────────────────────────────────────────────
     private JTextField             txtNombre;
+    private JTextField             txtCarrera;
+    private JTextField             txtPromedio;
+    
     private JButton                btnBuscar;
     private JTable                 tblResultados;
     private DefaultTableModel      modeloTabla;
@@ -48,17 +51,34 @@ public class EstudianteView extends JFrame {
         // Panel superior — barra de búsqueda
         JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panelBusqueda.setBorder(BorderFactory.createTitledBorder("Buscar estudiante"));
-
+        
+        JPanel panelAgregar = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        panelAgregar.setBorder(BorderFactory.createTitledBorder("Agregar estudiante"));
+        //------------------------------------------------------------------------------
+        
         JLabel lblNombre = new JLabel("Nombre:");
         txtNombre = new JTextField(25);
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(59, 139, 212));
         btnBuscar.setForeground(Color.WHITE);
         btnBuscar.setFocusPainted(false);
-
         panelBusqueda.add(lblNombre);
         panelBusqueda.add(txtNombre);
         panelBusqueda.add(btnBuscar);
+        
+        JLabel lblNombreAgg = new JLabel("Nombre:");
+        JLabel lblCarrera = new JLabel("Carrera:");
+        JLabel lblPromedio = new JLabel("Promedio:");
+        txtNombre = new JTextField(10);
+        panelAgregar.add(lblNombreAgg);
+        panelAgregar.add(txtNombre);
+        txtCarrera = new JTextField(10);
+        panelAgregar.add(lblCarrera);
+        panelAgregar.add(txtCarrera);
+        txtPromedio = new JTextField(10);
+        panelAgregar.add(lblPromedio);
+        panelAgregar.add(txtPromedio);
+        
 
         // Panel central — tabla de resultados
         String[] columnas = {"ID", "Nombre", "Carrera", "Promedio"};
@@ -80,6 +100,7 @@ public class EstudianteView extends JFrame {
         lblEstado.setForeground(Color.GRAY);
 
         add(panelBusqueda, BorderLayout.NORTH);
+        add(panelAgregar, BorderLayout.AFTER_LINE_ENDS);
         add(scroll,        BorderLayout.CENTER);
         add(lblEstado,     BorderLayout.SOUTH);
     }
