@@ -56,6 +56,7 @@ public class EstudianteController {
         this.estudiantes = new ArrayList();
         this.ultimosResultados = new ArrayList();
         
+        
         estudiantes.add(new Estudiante(1,  "Ana García",        "Ingeniería de Sistemas", 4.5));
         estudiantes.add(new Estudiante(2,  "Carlos López",      "Ingeniería Civil",       3.8));
         estudiantes.add(new Estudiante(3,  "María Rodríguez",   "Medicina",               4.9));
@@ -68,6 +69,7 @@ public class EstudianteController {
         estudiantes.add(new Estudiante(10, "Juliana Morales",   "Medicina",               4.8));
         estudiantes.add(new Estudiante(11, "Ana Milena Ruiz",   "Derecho",                4.0));
         estudiantes.add(new Estudiante(12, "Carlos Andrés Paz", "Administración",         3.6));
+        
         // Para poder filtrar con "ID".
         // Esto hecho suponiendo que el "ID" lo asigna automaticamente el sistema.
         this.cantidadEstudiantes = 12;
@@ -110,6 +112,20 @@ public class EstudianteController {
             vista.mostrarEstudiantes(convertirAFilas(resultados));
             this.ultimosResultados = resultados;
         }
+    }
+    
+    public void mostrarTodosLosEstudiantes()
+    {
+        if(this.estudiantes.isEmpty()) {
+            vista.mostrarError("No se puede mostrar todos si no hay estudiantes registrados.");
+            return;
+        }
+        this.ultimosResultados.clear();
+        for (Estudiante e : estudiantes) {
+               this.ultimosResultados.add(e);
+        }
+        //
+        vista.mostrarEstudiantes(convertirAFilas(ultimosResultados));
     }
     
     public boolean validaciones(String nombre, String carrera, String strPromedio){

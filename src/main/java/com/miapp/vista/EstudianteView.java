@@ -182,7 +182,12 @@ public class EstudianteView extends JFrame {
                 }
             }
         });
-
+        
+        btnMostrarTodos.addActionListener((ActionEvent e) -> {
+            if (controlador != null) {
+                controlador.mostrarTodosLosEstudiantes();
+            }
+            });                                                            
         // También buscar al presionar Enter en el campo de texto
         txtNombre.addActionListener((ActionEvent e) -> btnBuscar.doClick());
         txtNombreAgg.addActionListener((ActionEvent e) -> btnAgregar.doClick());
