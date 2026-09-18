@@ -5,6 +5,7 @@ import com.miapp.vista.EstudianteView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 /**
  * Controlador: gestiona la lógica entre la Vista y el Modelo.
@@ -21,10 +22,11 @@ public class EstudianteController {
     // ── Vista ─────────────────────────────────────────────────────────────────
     private EstudianteView vista;
     private int cantidadEstudiantes;
+    private boolean tipoAscendente = true;
 
     // ── Array de estudiantes (fuente de datos) ────────────────────────────────
     private ArrayList<Estudiante> estudiantes;
-    private ArrayList<Object> ultimosResultados;
+    private List<Estudiante> ultimosResultados;
 
     // ── Constructor ───────────────────────────────────────────────────────────
 
@@ -32,6 +34,16 @@ public class EstudianteController {
         this.vista = vista;
         this.vista.setControlador(this);
         cargarDatos();
+    }
+    
+    // ── Obtener información ───────────────────────────────────────────────────────────
+   
+    public boolean puedeOrdenar(){
+        return ultimosResultados != null && ultimosResultados.size() > 1;
+    }
+    
+    public Boolean getTipoAscendente(){
+        return tipoAscendente;
     }
 
     // ── Carga de datos iniciales ──────────────────────────────────────────────
@@ -90,48 +102,78 @@ public class EstudianteController {
         } else if (resultados.size() == 1) {
             // Un solo resultado: se convierte a fila y se usa vista.mostrarEstudiante(fila)
             vista.mostrarEstudiante(convertirAFila(resultados.get(0)));
+            this.ultimosResultados = resultados;
         } else {
             // Varios resultados: se convierte toda la lista antes de enviarla a la Vista
             vista.mostrarEstudiantes(convertirAFilas(resultados));
-            ultimosResultados.add(resultados);
+            this.ultimosResultados = resultados;
         }
     }
     
-    public void agregarEstudiante(String nombre, String carrera, double promedio){
+    public boolean validaciones(String nombre, String carrera, String strPromedio){
         if (nombre == null || nombre.isEmpty()) {
-            vista.mostrarError("Por favor ingrese un nombre.");
-            return;
+                vista.mostrarError("Por favor ingrese un nombre.");
+                return false;
         }
         else if(carrera == null || carrera.isEmpty()) {
-            vista.mostrarError("Por favor ingrese una carrera.");
-            return;
+                vista.mostrarError("Por favor ingrese una carrera.");
+                return false;
+        }
+        else if(strPromedio == null || strPromedio.isEmpty()) {
+                vista.mostrarError("Por favor ingrese un promedio.");
+                return false;
         } 
-        else if (promedio < 0 || promedio > 5) {
-            vista.mostrarError("Por favor ingrese un promedio válido (entre 0 y 5)");
-            return;
-        }
         else if (carrera.matches(".*\\d.*") || nombre.matches(".*\\d.*")) {
-            vista.mostrarError("La carrera y/o nombre no puede contener números.");
-            return;
+                vista.mostrarError("La carrera y/o nombre no puede contener números.");
+                return false;
         }
-        System.out.println(promedio);
+        if (!strPromedio.matches("^-?\\d+(\\.\\d+)?$")) {
+                vista.mostrarError("El promedio debe ser un número válido.");
+                return false;
+        } 
+        else if(Double.parseDouble(strPromedio) < 0.0 || Double.parseDouble(strPromedio) > 5.0) {
+                vista.mostrarError("Por favor ingrese un promedio válido (entre 0 y 5).");
+                return false;
+        }
+            return true;
+    }
+    
+    public void agregarEstudiante(String nombre, String carrera, String strPromedio){
+       if (validaciones(nombre, carrera, strPromedio) == false) {return;}
         for (Estudiante est : estudiantes) {
         if (est.getNombre().equalsIgnoreCase(nombre.trim())) {
             vista.mostrarError("Ya existe un estudiante con ese nombre.");
             return;
         }
     }
-    Estudiante est = new Estudiante(this.cantidadEstudiantes + 1, nombre, carrera, promedio);
+    Estudiante est = new Estudiante(this.cantidadEstudiantes + 1, nombre, carrera, Double.parseDouble(strPromedio));
     estudiantes.add(est);
     this.cantidadEstudiantes++;
     vista.mostrarEstudiantes(convertirAFilas(estudiantes));
     vista.mostrarConfirmacion(est);
     }
     
-    public void ordenarPor(String criterio){
-        System.out.println("Opcion es "+ criterio);
-        System.out.println(ultimosResultados);
-    }
+
+    public void ordenarPor(String criterio) {
+    if (ultimosResultados == null || ultimosResultados.isEmpty()){
+        vista.mostrarError("No es posible ordenar sin una busqueda previa"); return;}
+    else if(ultimosResultados.size() == 1){
+        vista.mostrarError("No es posible ordenar una lista de una sola persona."); return;}
+
+    Comparator<Estudiante> cmp = switch (criterio.trim().toLowerCase()) {
+        case "id"       -> Comparator.comparingInt(Estudiante::getId);
+        case "nombre"   -> Comparator.comparing(Estudiante::getNombre, String.CASE_INSENSITIVE_ORDER);
+        case "carrera"  -> Comparator.comparing(Estudiante::getCarrera, String.CASE_INSENSITIVE_ORDER);
+        case "promedio" -> Comparator.comparingDouble(Estudiante::getPromedio);
+        default         -> null;
+    };
+
+    if (cmp == null) return;
+
+    ultimosResultados.sort(tipoAscendente ? cmp : cmp.reversed());
+    tipoAscendente = !tipoAscendente;
+    vista.mostrarEstudiantes(convertirAFilas(ultimosResultados));
+}   
 
     // ── Traducción Modelo → datos para la Vista ───────────────────────────────
     // Estos métodos son el "puente" que evita que la Vista dependa de Estudiante.

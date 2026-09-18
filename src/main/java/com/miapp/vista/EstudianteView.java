@@ -157,13 +157,21 @@ public class EstudianteView extends JFrame {
         
         btnAgregar.addActionListener((ActionEvent e) -> {
             if (controlador != null) {
-                controlador.agregarEstudiante(txtNombreAgg.getText().trim(), txtCarrera.getText().trim(), Double.parseDouble(txtPromedio.getText().trim()));
+                controlador.agregarEstudiante(txtNombreAgg.getText().trim(), txtCarrera.getText().trim(), txtPromedio.getText().trim());
             }
         });
         
         btnOrdenar.addActionListener((ActionEvent e) -> {
             if (controlador != null) {
-                controlador.ordenarPor((String) opcCriterios.getSelectedItem());
+                String opcCriterio = (String) opcCriterios.getSelectedItem();
+                controlador.ordenarPor(opcCriterio);
+                
+                if (!controlador.puedeOrdenar()) {return;}
+                if (controlador.getTipoAscendente()) {
+                    setEstado("Se ha ordenado la lista descendentemente por criterio de " + opcCriterio);
+                } else {
+                    setEstado("Se ha ordenado la lista ascendentemente por criterio de " + opcCriterio);
+                }
             }
         });
 
