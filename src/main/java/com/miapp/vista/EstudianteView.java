@@ -26,9 +26,11 @@ public class EstudianteView extends JFrame {
     private JTextField             txtNombreAgg;
     private JTextField             txtCarrera;
     private JTextField             txtPromedio;
+    private JTextField             txtResultado;
     
     private JButton                btnBuscar;
     private JButton                btnAgregar;
+    private JButton                btnOrdenar;
     private JTable                 tblResultados;
     private DefaultTableModel      modeloTabla;
     private JLabel                 lblEstado;
@@ -62,6 +64,9 @@ public class EstudianteView extends JFrame {
         
         JPanel panelAgregar = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
         panelAgregar.setBorder(BorderFactory.createTitledBorder("Agregar estudiante"));
+        
+        JPanel panelOrdenar = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
+        panelOrdenar.setBorder(BorderFactory.createTitledBorder("Ordenar resultados"));
         //------------------------------------------------------------------------------
         
         JLabel lblNombre = new JLabel("Nombre:");
@@ -77,6 +82,7 @@ public class EstudianteView extends JFrame {
         JLabel lblNombreAgg = new JLabel("Nombre:");
         JLabel lblCarrera = new JLabel("Carrera:");
         JLabel lblPromedio = new JLabel("Promedio:");
+        JLabel lblCriterio = new JLabel("Criterio:");
         //
         txtNombreAgg = new JTextField(10);
         panelAgregar.add(lblNombreAgg);
@@ -95,6 +101,18 @@ public class EstudianteView extends JFrame {
         btnAgregar.setForeground(Color.WHITE);
         btnAgregar.setFocusPainted(false);
         panelAgregar.add(btnAgregar);
+        //
+        btnOrdenar = new JButton("Ordenar");
+        //btnOrdenar.setBackground(new Color(170, 194, 227));
+        btnOrdenar.setForeground(Color.BLACK);
+        btnOrdenar.setFocusPainted(false);
+        
+        String[] opciones = {"Nombre", "Carrera", "Promedio", "ID"};
+        JComboBox<String> opcCriterios = new JComboBox<>(opciones);
+        
+        panelOrdenar.add(lblCriterio);
+        panelOrdenar.add(opcCriterios);
+        panelOrdenar.add(btnOrdenar);
 
         
         
@@ -122,6 +140,7 @@ public class EstudianteView extends JFrame {
         add(panelSuperior, BorderLayout.NORTH);
         panelSuperior.add(panelBusqueda);
         panelSuperior.add(panelAgregar);
+        panelSuperior.add(panelOrdenar);
         
         add(scroll,        BorderLayout.CENTER);
         add(lblEstado,     BorderLayout.SOUTH);
