@@ -26,11 +26,11 @@ public class EstudianteView extends JFrame {
     private JTextField             txtNombreAgg;
     private JTextField             txtCarrera;
     private JTextField             txtPromedio;
-    private JTextField             txtResultado;
     
     private JButton                btnBuscar;
     private JButton                btnAgregar;
     private JButton                btnOrdenar;
+    private JButton                btnMostrarTodos;
     private JComboBox              opcCriterios;
     private JTable                 tblResultados;
     private DefaultTableModel      modeloTabla;
@@ -72,6 +72,7 @@ public class EstudianteView extends JFrame {
         
         JLabel lblNombre = new JLabel("Nombre:");
         txtNombre = new JTextField(25);
+        btnMostrarTodos = new JButton("Mostrar todos");
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(59, 139, 212));
         btnBuscar.setForeground(Color.WHITE);
@@ -79,6 +80,7 @@ public class EstudianteView extends JFrame {
         panelBusqueda.add(lblNombre);
         panelBusqueda.add(txtNombre);
         panelBusqueda.add(btnBuscar);
+        panelBusqueda.add(btnMostrarTodos);
         
         JLabel lblNombreAgg = new JLabel("Nombre:");
         JLabel lblCarrera = new JLabel("Carrera:");
