@@ -20,9 +20,10 @@ public class EstudianteController {
 
     // ── Vista ─────────────────────────────────────────────────────────────────
     private EstudianteView vista;
+    private int cantidadEstudiantes;
 
     // ── Array de estudiantes (fuente de datos) ────────────────────────────────
-    private Estudiante[] estudiantes;
+    private ArrayList<Estudiante> estudiantes;
 
     // ── Constructor ───────────────────────────────────────────────────────────
 
@@ -39,22 +40,23 @@ public class EstudianteController {
      * En un proyecto real este array vendría de una base de datos o servicio.
      */
     private void cargarDatos() {
-        estudiantes = new Estudiante[] {
-            new Estudiante(1,  "Ana García",        "Ingeniería de Sistemas",  4.5),
-            new Estudiante(2,  "Carlos López",      "Ingeniería Civil",        3.8),
-            new Estudiante(3,  "María Rodríguez",   "Medicina",                4.9),
-            new Estudiante(4,  "José Martínez",     "Derecho",                 3.5),
-            new Estudiante(5,  "Laura Sánchez",     "Administración",          4.1),
-            new Estudiante(6,  "Andrés Torres",     "Ingeniería de Sistemas",  3.9),
-            new Estudiante(7,  "Valentina Gómez",   "Psicología",              4.3),
-            new Estudiante(8,  "Luis Herrera",      "Economía",                3.7),
-            new Estudiante(9,  "Sofía Díaz",        "Ingeniería Civil",        4.6),
-            new Estudiante(10, "Juliana Morales",   "Medicina",                4.8),
-            new Estudiante(11, "Ana Milena Ruiz",   "Derecho",                 4.0),
-            new Estudiante(12, "Carlos Andrés Paz", "Administración",          3.6)
-        };
+        this.estudiantes = new ArrayList();
+        
+        estudiantes.add(new Estudiante(1,  "Ana García",        "Ingeniería de Sistemas", 4.5));
+        estudiantes.add(new Estudiante(2,  "Carlos López",      "Ingeniería Civil",       3.8));
+        estudiantes.add(new Estudiante(3,  "María Rodríguez",   "Medicina",               4.9));
+        estudiantes.add(new Estudiante(4,  "José Martínez",     "Derecho",                3.5));
+        estudiantes.add(new Estudiante(5,  "Laura Sánchez",     "Administración",         4.1));
+        estudiantes.add(new Estudiante(6,  "Andrés Torres",     "Ingeniería de Sistemas", 3.9));
+        estudiantes.add(new Estudiante(7,  "Valentina Gómez",   "Psicología",             4.3));
+        estudiantes.add(new Estudiante(8,  "Luis Herrera",      "Economía",               3.7));
+        estudiantes.add(new Estudiante(9,  "Sofía Díaz",        "Ingeniería Civil",       4.6));
+        estudiantes.add(new Estudiante(10, "Juliana Morales",   "Medicina",               4.8));
+        estudiantes.add(new Estudiante(11, "Ana Milena Ruiz",   "Derecho",                4.0));
+        estudiantes.add(new Estudiante(12, "Carlos Andrés Paz", "Administración",         3.6));
+        this.cantidadEstudiantes = 12;
     }
-
+    
     // ── Lógica de búsqueda ────────────────────────────────────────────────────
 
     /**
@@ -90,6 +92,30 @@ public class EstudianteController {
             // Varios resultados: se convierte toda la lista antes de enviarla a la Vista
             vista.mostrarEstudiantes(convertirAFilas(resultados));
         }
+    }
+    
+    public void agregarEstudiante(String nombre, String carrera, double promedio){
+        if (nombre == null || nombre.isEmpty()) {
+            vista.mostrarError("Por favor ingrese un nombre.");
+            return;
+        }
+        else if(carrera == null || carrera.isEmpty()) {
+            vista.mostrarError("Por favor ingrese una carrera.");
+            return;
+        } 
+        else if (promedio < 0 || promedio > 5) {
+            vista.mostrarError("Por favor ingrese un promedio válido (entre 0 y 5)");
+            return;
+        }
+        for (Estudiante est : estudiantes) {
+        if (est.getNombre().equalsIgnoreCase(nombre.trim())) {
+            vista.mostrarError("Ya existe un estudiante con ese nombre.");
+            return;
+        }
+    }
+
+    estudiantes.add(new Estudiante(this.cantidadEstudiantes + 1, nombre, carrera, promedio));
+    this.cantidadEstudiantes++; // Si llevas el contador manual
     }
 
     // ── Traducción Modelo → datos para la Vista ───────────────────────────────

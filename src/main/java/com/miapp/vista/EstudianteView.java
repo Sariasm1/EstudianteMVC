@@ -21,10 +21,12 @@ public class EstudianteView extends JFrame {
 
     // ── Componentes UI ────────────────────────────────────────────────────────
     private JTextField             txtNombre;
+    private JTextField             txtNombreAgg;
     private JTextField             txtCarrera;
     private JTextField             txtPromedio;
     
     private JButton                btnBuscar;
+    private JButton                btnAgregar;
     private JTable                 tblResultados;
     private DefaultTableModel      modeloTabla;
     private JLabel                 lblEstado;
@@ -49,10 +51,14 @@ public class EstudianteView extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
         // Panel superior — barra de búsqueda
+        JPanel panelSuperior = new JPanel();
+        panelSuperior.setLayout(new BoxLayout(panelSuperior, BoxLayout.Y_AXIS));
+        
+        
         JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panelBusqueda.setBorder(BorderFactory.createTitledBorder("Buscar estudiante"));
         
-        JPanel panelAgregar = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JPanel panelAgregar = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
         panelAgregar.setBorder(BorderFactory.createTitledBorder("Agregar estudiante"));
         //------------------------------------------------------------------------------
         
@@ -69,15 +75,27 @@ public class EstudianteView extends JFrame {
         JLabel lblNombreAgg = new JLabel("Nombre:");
         JLabel lblCarrera = new JLabel("Carrera:");
         JLabel lblPromedio = new JLabel("Promedio:");
-        txtNombre = new JTextField(10);
+        //
+        txtNombreAgg = new JTextField(10);
         panelAgregar.add(lblNombreAgg);
-        panelAgregar.add(txtNombre);
+        panelAgregar.add(txtNombreAgg);
+        //
         txtCarrera = new JTextField(10);
         panelAgregar.add(lblCarrera);
         panelAgregar.add(txtCarrera);
-        txtPromedio = new JTextField(10);
+        //
+        txtPromedio = new JTextField(5);
         panelAgregar.add(lblPromedio);
         panelAgregar.add(txtPromedio);
+        //
+        btnAgregar = new JButton("Agregar");
+        btnAgregar.setBackground(new Color(52, 181, 18));
+        btnAgregar.setForeground(Color.WHITE);
+        btnAgregar.setFocusPainted(false);
+        panelAgregar.add(btnAgregar);
+
+        
+        
         
 
         // Panel central — tabla de resultados
@@ -98,9 +116,11 @@ public class EstudianteView extends JFrame {
         lblEstado = new JLabel("Ingrese un nombre y presione Buscar.");
         lblEstado.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
         lblEstado.setForeground(Color.GRAY);
-
-        add(panelBusqueda, BorderLayout.NORTH);
-        add(panelAgregar, BorderLayout.AFTER_LINE_ENDS);
+        
+        add(panelSuperior, BorderLayout.NORTH);
+        panelSuperior.add(panelBusqueda);
+        panelSuperior.add(panelAgregar);
+        
         add(scroll,        BorderLayout.CENTER);
         add(lblEstado,     BorderLayout.SOUTH);
     }
