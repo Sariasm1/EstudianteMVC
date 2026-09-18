@@ -52,24 +52,27 @@ public class EstudianteController {
      * Inicializa el array de estudiantes con datos de ejemplo.
      * En un proyecto real este array vendría de una base de datos o servicio.
      */
+    
+    private void agregarEstudiante(int id, String nombre, String carrera, double promedio){
+        Estudiante est = new Estudiante(id, nombre, carrera, promedio);
+        estudiantes.add(est);
+    }
     private void cargarDatos() {
         this.estudiantes = new ArrayList();
         this.ultimosResultados = new ArrayList();
-        
-        
-        estudiantes.add(new Estudiante(1,  "Ana García",        "Ingeniería de Sistemas", 4.5));
-        estudiantes.add(new Estudiante(2,  "Carlos López",      "Ingeniería Civil",       3.8));
-        estudiantes.add(new Estudiante(3,  "María Rodríguez",   "Medicina",               4.9));
-        estudiantes.add(new Estudiante(4,  "José Martínez",     "Derecho",                3.5));
-        estudiantes.add(new Estudiante(5,  "Laura Sánchez",     "Administración",         4.1));
-        estudiantes.add(new Estudiante(6,  "Andrés Torres",     "Ingeniería de Sistemas", 3.9));
-        estudiantes.add(new Estudiante(7,  "Valentina Gómez",   "Psicología",             4.3));
-        estudiantes.add(new Estudiante(8,  "Luis Herrera",      "Economía",               3.7));
-        estudiantes.add(new Estudiante(9,  "Sofía Díaz",        "Ingeniería Civil",       4.6));
-        estudiantes.add(new Estudiante(10, "Juliana Morales",   "Medicina",               4.8));
-        estudiantes.add(new Estudiante(11, "Ana Milena Ruiz",   "Derecho",                4.0));
-        estudiantes.add(new Estudiante(12, "Carlos Andrés Paz", "Administración",         3.6));
-        
+       
+        agregarEstudiante(1, "Ana García", "Ingeniería de Sistemas", 4.5);
+        agregarEstudiante(2, "Carlos López", "Ingeniería Civil", 3.8);
+        agregarEstudiante(3, "María Rodríguez", "Medicina", 4.9);
+        agregarEstudiante(4, "José Martínez", "Derecho", 3.5);
+        agregarEstudiante(5, "Laura Sánchez", "Administración", 4.1);
+        agregarEstudiante(6, "Andrés Torres", "Ingeniería de Sistemas", 3.9);
+        agregarEstudiante(7, "Valentina Gómez", "Psicología", 4.3);
+        agregarEstudiante(8, "Luis Herrera", "Economía", 3.7);
+        agregarEstudiante(9, "Sofía Díaz", "Ingeniería Civil", 4.6);
+        agregarEstudiante(10, "Juliana Morales", "Medicina", 4.8);
+        agregarEstudiante(11, "Ana Milena Ruiz", "Derecho", 4.0);
+        agregarEstudiante(12, "Carlos Andrés Paz", "Administración", 3.6);
         // Para poder filtrar con "ID".
         // Esto hecho suponiendo que el "ID" lo asigna automaticamente el sistema.
         this.cantidadEstudiantes = 12;
