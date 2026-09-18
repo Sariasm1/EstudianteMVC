@@ -31,6 +31,7 @@ public class EstudianteView extends JFrame {
     private JButton                btnBuscar;
     private JButton                btnAgregar;
     private JButton                btnOrdenar;
+    private JComboBox              opcCriterios;
     private JTable                 tblResultados;
     private DefaultTableModel      modeloTabla;
     private JLabel                 lblEstado;
@@ -108,8 +109,7 @@ public class EstudianteView extends JFrame {
         btnOrdenar.setFocusPainted(false);
         
         String[] opciones = {"Nombre", "Carrera", "Promedio", "ID"};
-        JComboBox<String> opcCriterios = new JComboBox<>(opciones);
-        
+        opcCriterios = new JComboBox<>(opciones);
         panelOrdenar.add(lblCriterio);
         panelOrdenar.add(opcCriterios);
         panelOrdenar.add(btnOrdenar);
@@ -158,6 +158,12 @@ public class EstudianteView extends JFrame {
         btnAgregar.addActionListener((ActionEvent e) -> {
             if (controlador != null) {
                 controlador.agregarEstudiante(txtNombreAgg.getText().trim(), txtCarrera.getText().trim(), Double.parseDouble(txtPromedio.getText().trim()));
+            }
+        });
+        
+        btnOrdenar.addActionListener((ActionEvent e) -> {
+            if (controlador != null) {
+                controlador.ordenarPor((String) opcCriterios.getSelectedItem());
             }
         });
 

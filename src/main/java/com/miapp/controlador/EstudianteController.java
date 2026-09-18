@@ -24,6 +24,7 @@ public class EstudianteController {
 
     // ── Array de estudiantes (fuente de datos) ────────────────────────────────
     private ArrayList<Estudiante> estudiantes;
+    private ArrayList<Object> ultimosResultados;
 
     // ── Constructor ───────────────────────────────────────────────────────────
 
@@ -41,6 +42,7 @@ public class EstudianteController {
      */
     private void cargarDatos() {
         this.estudiantes = new ArrayList();
+        this.ultimosResultados = new ArrayList();
         
         estudiantes.add(new Estudiante(1,  "Ana García",        "Ingeniería de Sistemas", 4.5));
         estudiantes.add(new Estudiante(2,  "Carlos López",      "Ingeniería Civil",       3.8));
@@ -91,6 +93,7 @@ public class EstudianteController {
         } else {
             // Varios resultados: se convierte toda la lista antes de enviarla a la Vista
             vista.mostrarEstudiantes(convertirAFilas(resultados));
+            ultimosResultados.add(resultados);
         }
     }
     
@@ -123,6 +126,11 @@ public class EstudianteController {
     this.cantidadEstudiantes++;
     vista.mostrarEstudiantes(convertirAFilas(estudiantes));
     vista.mostrarConfirmacion(est);
+    }
+    
+    public void ordenarPor(String criterio){
+        System.out.println("Opcion es "+ criterio);
+        System.out.println(ultimosResultados);
     }
 
     // ── Traducción Modelo → datos para la Vista ───────────────────────────────
