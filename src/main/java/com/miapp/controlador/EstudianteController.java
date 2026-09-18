@@ -107,15 +107,22 @@ public class EstudianteController {
             vista.mostrarError("Por favor ingrese un promedio válido (entre 0 y 5)");
             return;
         }
+        else if (carrera.matches(".*\\d.*") || nombre.matches(".*\\d.*")) {
+            vista.mostrarError("La carrera y/o nombre no puede contener números.");
+            return;
+        }
+        System.out.println(promedio);
         for (Estudiante est : estudiantes) {
         if (est.getNombre().equalsIgnoreCase(nombre.trim())) {
             vista.mostrarError("Ya existe un estudiante con ese nombre.");
             return;
         }
     }
-
-    estudiantes.add(new Estudiante(this.cantidadEstudiantes + 1, nombre, carrera, promedio));
-    this.cantidadEstudiantes++; // Si llevas el contador manual
+    Estudiante est = new Estudiante(this.cantidadEstudiantes + 1, nombre, carrera, promedio);
+    estudiantes.add(est);
+    this.cantidadEstudiantes++;
+    vista.mostrarEstudiantes(convertirAFilas(estudiantes));
+    vista.mostrarConfirmacion(est);
     }
 
     // ── Traducción Modelo → datos para la Vista ───────────────────────────────

@@ -2,6 +2,8 @@ package com.miapp.vista;
 
 import com.miapp.controlador.EstudianteController;
 
+import com.miapp.modelo.*;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -133,9 +135,16 @@ public class EstudianteView extends JFrame {
                 controlador.buscarEstudiante(txtNombre.getText().trim());
             }
         });
+        
+        btnAgregar.addActionListener((ActionEvent e) -> {
+            if (controlador != null) {
+                controlador.agregarEstudiante(txtNombreAgg.getText().trim(), txtCarrera.getText().trim(), Double.parseDouble(txtPromedio.getText().trim()));
+            }
+        });
 
         // También buscar al presionar Enter en el campo de texto
         txtNombre.addActionListener((ActionEvent e) -> btnBuscar.doClick());
+        txtNombreAgg.addActionListener((ActionEvent e) -> btnAgregar.doClick());
     }
 
     // ── Métodos públicos que llama el Controlador ─────────────────────────────
@@ -182,6 +191,10 @@ public class EstudianteView extends JFrame {
      */
     public String getNombreBuscado() {
         return txtNombre.getText().trim();
+    }
+    
+    public void mostrarConfirmacion(Estudiante est){
+        setEstado("Se ha agregado al estudiante "+ est.getNombre() + " del programa "+ est.getCarrera()+ " con promedio de "+ est.getPromedio());
     }
 
     // ── Setter del controlador ────────────────────────────────────────────────
