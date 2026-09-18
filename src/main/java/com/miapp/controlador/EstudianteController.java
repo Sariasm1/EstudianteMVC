@@ -68,6 +68,8 @@ public class EstudianteController {
         estudiantes.add(new Estudiante(10, "Juliana Morales",   "Medicina",               4.8));
         estudiantes.add(new Estudiante(11, "Ana Milena Ruiz",   "Derecho",                4.0));
         estudiantes.add(new Estudiante(12, "Carlos Andrés Paz", "Administración",         3.6));
+        // Para poder filtrar con "ID".
+        // Esto hecho suponiendo que el "ID" lo asigna automaticamente el sistema.
         this.cantidadEstudiantes = 12;
     }
     
@@ -139,6 +141,7 @@ public class EstudianteController {
     }
     
     public void agregarEstudiante(String nombre, String carrera, String strPromedio){
+       // Validaciones asignadas a una propia function para evitar saturar esta.
        if (validaciones(nombre, carrera, strPromedio) == false) {return;}
         for (Estudiante est : estudiantes) {
         if (est.getNombre().equalsIgnoreCase(nombre.trim())) {
@@ -148,6 +151,7 @@ public class EstudianteController {
     }
     Estudiante est = new Estudiante(this.cantidadEstudiantes + 1, nombre, carrera, Double.parseDouble(strPromedio));
     estudiantes.add(est);
+    // Sumar para asignar ID predeterminado.
     this.cantidadEstudiantes++;
     vista.mostrarEstudiantes(convertirAFilas(estudiantes));
     vista.mostrarConfirmacion(est);

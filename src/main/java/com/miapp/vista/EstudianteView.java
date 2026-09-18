@@ -158,6 +158,8 @@ public class EstudianteView extends JFrame {
         btnAgregar.addActionListener((ActionEvent e) -> {
             if (controlador != null) {
                 controlador.agregarEstudiante(txtNombreAgg.getText().trim(), txtCarrera.getText().trim(), txtPromedio.getText().trim());
+                txtNombreAgg.setText(""); txtCarrera.setText(""); txtPromedio.setText("");
+                // Borrado para poder verse más "limpio" una vez interactuado con el botón.
             }
         });
         
@@ -166,6 +168,10 @@ public class EstudianteView extends JFrame {
                 String opcCriterio = (String) opcCriterios.getSelectedItem();
                 controlador.ordenarPor(opcCriterio);
                 
+                /* 
+                Se realiza estas validaciones extras, ya que "setEstado" al ser private, no puede ser llamado desde 
+                el controlador, haciendo que tenga que usar funciones booleanas de retorno
+                */
                 if (!controlador.puedeOrdenar()) {return;}
                 if (controlador.getTipoAscendente()) {
                     setEstado("Se ha ordenado la lista descendentemente por criterio de " + opcCriterio);
